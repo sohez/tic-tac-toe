@@ -6,9 +6,23 @@ set_empty();//set all ary element empty
 let clicks = 0; //count a clicks
 var userx = usero = 0; // X and O win Points
 let draw = 0; //count a draw matchs
-var play_with = $('input[name=q]:checked').val();//check if play with bot ot 2 players
-
+var play_with = "p2" //check if play with bot ot 2 players
+check_play_with();
 who_play_set_color();//check and set color for witch player play
+var arri = [];
+
+function set_player(id_player) {
+    if (id_player != play_with) {
+        play_with = id_player;
+        check_play_with();
+        userx = usero = 0;
+        draw = 0;
+        $('#ux').text(userx);
+        $('#uo').text(usero);
+        $('#draw').text(draw);
+        reset_game();
+    }
+}
 
 function boxclick(get_box_id) {
     var res = get_box_id.charAt(get_box_id.length - 1);//store box id int
@@ -17,6 +31,7 @@ function boxclick(get_box_id) {
 }
 
 function logic() {
+
     var box_array = [
         [box[0], box[1], box[2]],
         [box[0], box[3], box[6]],
@@ -35,17 +50,18 @@ function logic() {
             game_win(x);
             win_change_opacity(i);
 
-        } else if (box_array[i][0] == o && box_array[i][1] == o && box_array[i][2] == o) {
+        }
+        if (box_array[i][0] == o && box_array[i][1] == o && box_array[i][2] == o) {
 
             game_win(o);
             win_change_opacity(i);
-
-        }
-
-        if (clicks == 9) {
-            game_draw();
         }
     }
+
+    if (clicks == 9) {
+        game_draw();
+    }
+
 }
 
 function game_win(winer) {
@@ -61,51 +77,56 @@ function game_win(winer) {
 }
 
 function game_draw() {
+
     draw++;
     $('#draw').text(draw);
-    win_change_opacity("", "", "");
+    win_change_opacity("");
     setTimeout(reset_game, 1000);
 }
 
 function set_values(box_ary, box_id) {
     //store a values in array and other logic
-    $("#info").text("")
+    $("#info").text("");
 
     if (player == 0) {
         box[box_ary] = x;
         player++;
         $(box_id).text('X');
+        clicks++;
+        logic();
 
-    } else if (play_with == "bot") {
-        bot();
     } else {
         box[box_ary] = o;
         player--;
         $(box_id).text('O');
         $(box_id).css("color", "blue");
+        clicks++;
+        logic();
     }
 
-    clicks++;
+    if (play_with == "bot") {
+        bot();
+    }
+   
     who_play_set_color();
-    logic();
 
 }
-function reset_game() {
 
+function reset_game() {
     set_empty(); //set array empty
     clicks = 0;//set click == 0
 
     if (play_with == "bot") {
         //che3ck if select on box
         player = 0;
+        who_play_set_color();
     }
 
-    for(i=1;i<=9;i++){
-        $("#box"+i).text('');
-        $("#box"+i).css("color", "red");
-        $("#box"+i).css("opacity", "1");
+    for (i = 1; i <= 9; i++) {
+        $("#box" + i).text('');
+        $("#box" + i).css("color", "red");
+        $("#box" + i).css("opacity", "1");
     }
-
 }
 
 function who_play_set_color() {
@@ -121,6 +142,30 @@ function who_play_set_color() {
     }
 }
 
+function set_empty() {
+
+    for (i = 0; i <= 9; i++) {
+        //set all array empty
+        box[i] = "";
+    }
+}
+
+function set_lock() {
+
+    for (i = 0; i <= 9; i++) {
+        //set all array empty
+        box[i] = "locked";
+    }
+}
+function check_play_with() {
+    if (play_with == "p2") {
+        $("#p2").css("text-decoration", "underline");
+        $("#bot").css("text-decoration", "none")
+    } else {
+        $("#bot").css("text-decoration", "underline");
+        $("#p2").css("text-decoration", "none")
+    }
+}
 function win_change_opacity(i) {
     set_lock();
 
@@ -178,327 +223,318 @@ function win_change_opacity(i) {
     }
     //jite hue ki Opacity karm hai karni
 }
-
-function set_empty() {
-
-    for (i = 0; i <= 9; i++) {
-        //set all array empty
-        box[i] = "";
-    }
-}
-
-function set_lock() {
-
-    for (i = 0; i <= 9; i++) {
-        //set all array empty
-        box[i] = "locked";
-    }
-}
 function bot() {
     if (player == 1) {
 
         setTimeout(() => {
 
-            if ((box[0] == x || box[1] == x || box[2] == x) && (box[0] == "" || box[1] == "" || box[2] == "")) {
+        if (box[0] == o || box[1] == o || box[2] == o) {
 
-                if (box[0] == "") {
-                    box[0] = o;
-                    $("#box1").text('O');
-                    $("#box1").css("color", "blue");
-                } else if (box[1] == "") {
-                    box[1] = o;
-                    $("#box2").text('O');
-                    $("#box2").css("color", "blue");
-                } else if (box[2] == "") {
-                    box[2] = o;
-                    $("#box3").text('O');
-                    $("#box3").css("color", "blue");
-                }
+            if (box[0] == "") {
+                box[0] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box1").text('O');
+                $("#box1").css("color", "blue");
+                return;
+            } else if (box[1] == "") {
+                box[1] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box2").text('O');
+                $("#box2").css("color", "blue");
+                return;
+            } else if (box[2] == "") {
+                box[2] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box3").text('O');
+                $("#box3").css("color", "blue");
+                return;
+            }
 
-            } else if ((box[0] == x || box[3] == x || box[6] == x) && (box[0] == "" || box[3] == "" || box[6] == "")) {
+        }
+        if (box[0] == o || box[3] == o || box[6] == o) {
 
-                if (box[0] == "") {
-                    box[0] = o;
-                    $("#box1").text('O');
-                    $("#box1").css("color", "blue");
-                } else if (box[3] == "") {
-                    box[3] = o;
-                    $("#box4").text('O');
-                    $("#box4").css("color", "blue");
-                } else if (box[6] == "") {
-                    box[6] = o;
-                    $("#box7").text('O');
-                    $("#box7").css("color", "blue");
-                }
+            if (box[0] == "") {
+                box[0] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box1").text('O');
+                $("#box1").css("color", "blue");
+                return;
+            } else if (box[3] == "") {
+                box[3] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box4").text('O');
+                $("#box4").css("color", "blue");
+                return;
+            } else if (box[6] == "") {
+                box[6] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box7").text('O');
+                $("#box7").css("color", "blue");
+                return;
+            }
 
-            } //else if (box[3] == x || box[4] == x || box[5] == x) {
+        }
+        if (box[3] == o || box[4] == o || box[5] == o) {
 
-            //     if (box[3] == "") {
-            //         box[3] = o;
-            //         $("#box4").text('O');
-            //         $("#box4").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[5] == "") {
-            //         box[5] = o;
-            //         $("#box6").text('O');
-            //         $("#box6").css("color", "blue");
-            //     }
+            if (box[3] == "") {
+                box[3] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box4").text('O');
+                $("#box4").css("color", "blue");
+                return;
+            } else if (box[4] == "") {
+                box[4] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box5").text('O');
+                $("#box5").css("color", "blue");
+                return;
+            } else if (box[5] == "") {
+                box[5] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box6").text('O');
+                $("#box6").css("color", "blue");
+                return;
+            }
 
-            // } else if (box[6] == x || box[7] == x || box[8] == x) {
+        }
+        if (box[6] == o || box[7] == o || box[8] == o) {
 
-            //     if (box[6] == "") {
-            //         box[6] = o;
-            //         $("#box7").text('O');
-            //         $("#box7").css("color", "blue");
-            //     } else if (box[7] == "") {
-            //         box[7] = o;
-            //         $("#box8").text('O');
-            //         $("#box8").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
+            if (box[6] == "") {
+                box[6] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box7").text('O');
+                $("#box7").css("color", "blue");
+                return;
+            } else if (box[7] == "") {
+                box[7] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box8").text('O');
+                $("#box8").css("color", "blue");
+                return;
+            } else if (box[8] == "") {
+                box[8] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box9").text('O');
+                $("#box9").css("color", "blue");
+                return;
+            }
 
-            // } else if (box[1] == x || box[4] == x || box[7] == x) {
+        }
+        if (box[1] == o || box[4] == o || box[7] == o) {
 
-            //     if (box[1] == "") {
-            //         box[1] = o;
-            //         $("#box2").text('O');
-            //         $("#box2").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[7] == "") {
-            //         box[7] = o;
-            //         $("#box8").text('O');
-            //         $("#box8").css("color", "blue");
-            //     }
+            if (box[1] == "") {
+                box[1] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box2").text('O');
+                $("#box2").css("color", "blue");
+                return;
+            } else if (box[4] == "") {
+                box[4] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box5").text('O');
+                $("#box5").css("color", "blue");
+                return;
+            } else if (box[7] == "") {
+                box[7] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box8").text('O');
+                $("#box8").css("color", "blue");
+                return;
+            }
 
-            // } else if (box[2] == x || box[5] == x || box[8] == x) {
+        }
+        if (box[2] == o || box[5] == o || box[8] == o) {
 
-            //     if (box[2] == "") {
-            //         box[2] = o;
-            //         $("#box3").text('O');
-            //         $("#box3").css("color", "blue");
-            //     } else if (box[5] == "") {
-            //         box[5] = o;
-            //         $("#box6").text('O');
-            //         $("#box6").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
+            if (box[2] == "") {
+                box[2] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box3").text('O');
+                $("#box3").css("color", "blue");
+                return;
+            } else if (box[5] == "") {
+                box[5] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box6").text('O');
+                $("#box6").css("color", "blue");
+                return;
+            } else if (box[8] == "") {
+                box[8] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box9").text('O');
+                $("#box9").css("color", "blue");
+                return
+            }
 
-            // } else if (box[0] == x || box[4] == x || box[8] == x) {
+        }
+        if (box[0] == o || box[4] == o || box[8] == o) {
 
-            //     if (box[0] == "") {
-            //         box[0] = o;
-            //         $("#box1").text('O');
-            //         $("#box1").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
+            if (box[0] == "") {
+                box[0] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box1").text('O');
+                $("#box1").css("color", "blue");
+                return;
+            } else if (box[4] == "") {
+                box[4] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box5").text('O');
+                $("#box5").css("color", "blue");
+                return;
+            } else if (box[8] == "") {
+                box[8] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box9").text('O');
+                $("#box9").css("color", "blue");
+                return;
+            }
 
-            // } else if (box[2] == x || box[4] == x || box[6] == x) {
+        }
+        if (box[2] == o || box[4] == o || box[6] == o) {
 
-            //     if (box[2] == "") {
-            //         box[2] = o;
-            //         $("#box3").text('O');
-            //         $("#box3").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[6] == "") {
-            //         box[6] = o;
-            //         $("#box7").text('O');
-            //         $("#box7").css("color", "blue");
-            //     }
+            if (box[2] == "") {
+                box[2] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box3").text('O');
+                $("#box3").css("color", "blue");
+                return;
+            } else if (box[4] == "") {
+                box[4] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box5").text('O');
+                $("#box5").css("color", "blue");
+                return;
+            } else if (box[6] == "") {
+                box[6] = o;
+                clicks++;
+                player--;
+                logic();
+                $("#box7").text('O');
+                $("#box7").css("color", "blue");
+                return;
+            }
+        }
 
-            // } else if (box[0] == o || box[1] == o || box[2] == o) {
-
-            //     if (box[0] == "") {
-            //         box[0] = o;
-            //         $("#box1").text('O');
-            //         $("#box1").css("color", "blue");
-            //     } else if (box[1] == "") {
-            //         box[1] = o;
-            //         $("#box2").text('O');
-            //         $("#box2").css("color", "blue");
-            //     } else if (box[2] == "") {
-            //         box[2] = o;
-            //         $("#box3").text('O');
-            //         $("#box3").css("color", "blue");
-            //     }
-
-            // } else if (box[0] == o || box[3] == o || box[6] == o) {
-
-            //     if (box[0] == "") {
-            //         box[0] = o;
-            //         $("#box1").text('O');
-            //         $("#box1").css("color", "blue");
-            //     } else if (box[3] == "") {
-            //         box[3] = o;
-            //         $("#box4").text('O');
-            //         $("#box4").css("color", "blue");
-            //     } else if (box[6] == "") {
-            //         box[6] = o;
-            //         $("#box7").text('O');
-            //         $("#box7").css("color", "blue");
-            //     }
-
-            // } else if (box[3] == o || box[4] == o || box[5] == o) {
-
-            //     if (box[3] == "") {
-            //         box[3] = o;
-            //         $("#box4").text('O');
-            //         $("#box4").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[5] == "") {
-            //         box[5] = o;
-            //         $("#box6").text('O');
-            //         $("#box6").css("color", "blue");
-            //     }
-
-            // } else if (box[6] == o || box[7] == o || box[8] == o) {
-
-            //     if (box[6] == "") {
-            //         box[6] = o;
-            //         $("#box7").text('O');
-            //         $("#box7").css("color", "blue");
-            //     } else if (box[7] == "") {
-            //         box[7] = o;
-            //         $("#box8").text('O');
-            //         $("#box8").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
-
-            // } else if (box[1] == o || box[4] == o || box[7] == o) {
-
-            //     if (box[1] == "") {
-            //         box[1] = o;
-            //         $("#box2").text('O');
-            //         $("#box2").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[7] == "") {
-            //         box[7] = o;
-            //         $("#box8").text('O');
-            //         $("#box8").css("color", "blue");
-            //     }
-
-            // } else if (box[2] == o || box[5] == o || box[8] == o) {
-
-            //     if (box[2] == "") {
-            //         box[2] = o;
-            //         $("#box3").text('O');
-            //         $("#box3").css("color", "blue");
-            //     } else if (box[5] == "") {
-            //         box[5] = o;
-            //         $("#box6").text('O');
-            //         $("#box6").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
-
-            // } else if (box[0] == o || box[4] == o || box[8] == o) {
-
-            //     if (box[0] == "") {
-            //         box[0] = o;
-            //         $("#box1").text('O');
-            //         $("#box1").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
-
-            // } else if (box[2] == o || box[4] == o || box[6] == o) {
-
-            //     if (box[2] == "") {
-            //         box[2] = o;
-            //         $("#box3").text('O');
-            //         $("#box3").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[6] == "") {
-            //         box[6] = o;
-            //         $("#box7").text('O');
-            //         $("#box7").css("color", "blue");
-            //     }
-
-            // } else
-
-            //     if (box[0] == "") {
-            //         box[0] = o;
-            //         $("#box1").text('O');
-            //         $("#box1").css("color", "blue");
-            //     } else if (box[1] == "") {
-            //         box[1] = o;
-            //         $("#box2").text('O');
-            //         $("#box2").css("color", "blue");
-            //     } else if (box[2] == "") {
-            //         box[2] = o;
-            //         $("#box3").text('O');
-            //         $("#box3").css("color", "blue");
-            //     } else if (box[3] == "") {
-            //         box[3] = o;
-            //         $("#box4").text('O');
-            //         $("#box4").css("color", "blue");
-            //     } else if (box[4] == "") {
-            //         box[4] = o;
-            //         $("#box5").text('O');
-            //         $("#box5").css("color", "blue");
-            //     } else if (box[5] == "") {
-            //         box[5] = o;
-            //         $("#box6").text('O');
-            //         $("#box6").css("color", "blue");
-            //     } else if (box[6] == "") {
-            //         box[6] = o;
-            //         $("#box7").text('O');
-            //         $("#box7").css("color", "blue");
-            //     } else if (box[7] == "") {
-            //         box[7] = o;
-            //         $("#box8").text('O');
-            //         $("#box8").css("color", "blue");
-            //     } else if (box[8] == "") {
-            //         box[8] = o;
-            //         $("#box9").text('O');
-            //         $("#box9").css("color", "blue");
-            //     }
-
+        if (box[0] == "") {
+            box[0] = o;
+            clicks++;
             player--;
             logic();
+            $("#box1").text('O');
+            $("#box1").css("color", "blue");
+            return;
+        } else if (box[1] == "") {
+            box[1] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box2").text('O');
+            $("#box2").css("color", "blue");
+            return;
+        } else if (box[2] == "") {
+            box[2] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box3").text('O');
+            $("#box3").css("color", "blue");
+            return;
+        } else if (box[3] == "") {
+            box[3] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box4").text('O');
+            $("#box4").css("color", "blue");
+            return;
+        } else if (box[4] == "") {
+            box[4] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box5").text('O');
+            $("#box5").css("color", "blue");
+            return;
+        } else if (box[5] == "") {
+            box[5] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box6").text('O');
+            $("#box6").css("color", "blue");
+            return;
+        } else if (box[6] == "") {
+            box[6] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box7").text('O');
+            $("#box7").css("color", "blue");
+            return;
+        } else if (box[7] == "") {
+            box[7] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box8").text('O');
+            $("#box8").css("color", "blue");
+            return;
+        } else if (box[8] == "") {
+            box[8] = o;
+            clicks++;
+            player--;
+            logic();
+            $("#box9").text('O');
+            $("#box9").css("color", "blue");
+            return;
+        }
 
-        }, 500);
+        }, 100);
 
     }
 }
