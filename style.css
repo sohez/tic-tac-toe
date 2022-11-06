@@ -30,6 +30,7 @@ body {
   font-size: 4rem;
   font-weight: 900;
   color: red;
+ 
 }
 #o {
   font-size: 4rem;
@@ -60,7 +61,6 @@ body {
   font-weight: 900;
   cursor: pointer;
   box-shadow: black 0px 0px 9px inset;
-  
 }
 .col-2:hover {
   border: 3px solid var(--rot);
