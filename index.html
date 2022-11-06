@@ -20,6 +20,7 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="style.css" />
+   
   </head>
   <body>
 
@@ -43,8 +44,8 @@
               <div class="col-5"> <b>Play with</b></div>
             </div>
             <div class="row">
-              <div class="col-5">BOT:<input type="radio" class="pbot" value="bot" name="q"></div>
-              <div class="col-5">2 Player:<input type="radio" class="pbot" value="human" name="q"></div>
+              <div class="col-5"><p id="bot" onclick="set_player(this.id)">Single Player</p></div>
+              <div class="col-5"><p id="p2" onclick="set_player(this.id)">2 Player</p></div>
             </div>
           </div>
           <!-- end top-->
