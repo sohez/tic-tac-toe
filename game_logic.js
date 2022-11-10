@@ -9,7 +9,7 @@ let draw = 0; //count a draw matchs
 var play_with = "p2" //check if play with bot ot 2 players
 check_play_with();
 who_play_set_color();//check and set color for witch player play
-var arri = [];
+//Hey
 
 function set_player(id_player) {
     if (id_player != play_with) {
