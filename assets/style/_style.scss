@@ -105,9 +105,12 @@ article{
     padding: 12px;
     max-width: 85%;
     margin: auto;
-    line-height: 1.3;
+    line-height: 1.4;
     section{
-        margin: 5px;
+        margin-bottom: 10px;
+    }
+    ul, li, a{
+        word-break: break-all;
     }
 }
 
