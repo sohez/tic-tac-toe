@@ -4,82 +4,101 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>tic tac toe</title>
-    <!-- Bootstrap links -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-      crossorigin="anonymous"
+    <title>Tic Tac Toe - Play Online Against Unbeatable Bot & Friends</title>
+    <meta
+      name="title"
+      content="Tic Tac Toe - Play Online Against Unbeatable Bot & Friends"
     />
-    <!--Jquery links-->
- 
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.js"
-      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="style.css" />
-   
+    <meta
+      name="description"
+      content="Experience Tic Tac Toe like never before! Challenge an unbeatable bot or play with friends in this classic strategy game. Free, fun, and perfect for all ages. Join the challenge now!"
+    />
+    <meta
+      name="keywords"
+      content="Tic Tac Toe, play Tic Tac Toe online, unbeatable Tic Tac Toe bot, free Tic Tac Toe game, classic strategy game, play against friends, online Tic Tac Toe, Tic Tac Toe for all ages, Tic Tac Toe challenge, fun Tic Tac Toe game"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#151414" />
+    <link rel="canonical" href="https://sohez.github.io/tic-tac-toe/" />
+    <meta name="”robots”" content="index, follow" />
+    <meta
+      name="og_site_name"
+      property="og:site_name"
+      content="sohez.github.io/tic-tac-toe/"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#151414" />
+
+    <meta
+      property="og:title"
+      content="Tic Tac Toe - Play Online Against Unbeatable Bot & Friends"
+    />
+    <meta property="og:url" content="https://sohez.github.io/tic-tac-toe/" />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="Experience Tic Tac Toe like never before! Challenge an unbeatable bot or play with friends in this classic strategy game. Free, fun, and perfect for all ages. Join the challenge now!"
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="./assets/img/android-chrome-512x512.png"
+    />
+
+    <link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico" />
+
+    <!-- google fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- normalize CDN-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css "
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/style/style.css" />
   </head>
   <body>
-
-    <div class="container">
-      <div class="canvas">
-        <div class="wdt">
-          <!--Yaha se top section -->
-          <div class="top">
-            <div class="row justify-content-center">
-              <div class="col-3">
-                <span id="x">X</span><br /><span id="ux">0</span>
-              </div>
-              <div class="col-3">
-                <span id="o">O</span><br /><span id="uo">0</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-3">Draw:<span id="draw"> 0</span></div>
-            </div>
-            <div class="row">
-              <div class="col-5"> <b>Play with</b></div>
-            </div>
-            <div class="row">
-              <div class="col-5"><p id="bot" onclick="set_player(this.id)">Single Player</p></div>
-              <div class="col-5"><p id="p2" onclick="set_player(this.id)">2 Player</p></div>
-            </div>
-          </div>
-          <!-- end top-->
-          <!--!yaha se grid chalu hua -->
-          <div class="row justify-content-center" style="margin-top: 15px;" >
-            <div class="col-2" id="box1" onclick="boxclick(this.id)"></div>
-            <div class="col-2" id="box2" onclick="boxclick(this.id)"></div>
-            <div class="col-2" id="box3" onclick="boxclick(this.id)"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-2" id="box4" onclick="boxclick(this.id)"></div>
-            <div class="col-2" id="box5" onclick="boxclick(this.id)"></div>
-            <div class="col-2" id="box6" onclick="boxclick(this.id)"></div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-2" id="box7" onclick="boxclick(this.id)"></div>
-            <div class="col-2" id="box8" onclick="boxclick(this.id)"></div>
-            <div class="col-2" id="box9" onclick="boxclick(this.id)"></div>
-          </div>
+    <main>
+      <section id="score-bord">
+        <div>
+          <p>x: <span id="score-x">0</span></p>
+          <p>o: <span id="score-o">0</span></p>
+          <p>Draw: <span id="score-draw">0</span></p>
+          <p>Turn: <span id="player-turn">X</span></p>
         </div>
-        <p id="info" class="text-center"></p>
-      </div>
-      <!-- Yaha se Footer chalu hai-->
-      <div class="row">
-        <h2 style="text-align: center; font-weight: bold">
-          Developed By Sohel Sayyed
-        </h2>
-        <h2 id="h"style="text-align: center; font-weight: bold">
-          Sohel Sayyed
-        </h2>
-      </div>
-    </div>
+        <div>
+          <select name="play-with" id="play-with">
+            <option value="bot">Bot</option>
+            <option value="Friend">Friend</option>
+          </select>
+          <button>RESET</button>
+        </div>
+      </section>
+      <section id="game-canvas">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </section>
+    </main>
+    <footer>
+      <div>
 
+      </div>
+      <div>
+        <span>Developed BY <span>Sayyed Sohel</span></span>
+      </div>
+    </footer>
   </body>
-  <script src="game_logic.js"></script>
-
+  <script src="./assets/script/game-script.js"></script>
 </html>
