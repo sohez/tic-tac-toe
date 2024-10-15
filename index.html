@@ -63,6 +63,9 @@
     <link rel="stylesheet" href="./assets/style/style.css" />
   </head>
   <body>
+    <header>
+      <h1>Tic Tac Toe - Play Online Against Unbeatable Bot & Friends</h1>
+    </header>
     <main>
       <section id="score-bord">
         <div>
@@ -91,12 +94,81 @@
         <div></div>
       </section>
     </main>
+    <article>
+      <section>
+        <h2>What is Tic Tac Toe?</h2>
+        <p>
+          Tic Tac Toe is a simple two-player game played on a 3x3 grid. Players
+          take turns marking a space with their symbol (either X or O). The
+          objective is to be the first to get three of their symbols in a row,
+          either horizontally, vertically, or diagonally.
+        </p>
+      </section>
+
+      <section>
+        <h2>How to Play Tic Tac Toe</h2>
+        <ul>
+          <li>The game is played on a 3x3 grid.</li>
+          <li>
+            Players take turns placing their symbol (X or O) in an empty cell.
+          </li>
+          <li>The first player to align three symbols wins the game.</li>
+          <li>
+            If all cells are filled without a winner, the game ends in a draw.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Understanding the Minimax Algorithm</h2>
+        <p>
+          The Minimax algorithm is a decision-making algorithm used in game
+          theory and AI. It's particularly useful in two-player games like Tic
+          Tac Toe. Here’s a simple breakdown:
+        </p>
+        <ul>
+          <li>
+            <strong>Objective:</strong> The algorithm aims to minimize the
+            possible loss while maximizing the potential gain.
+          </li>
+          <li>
+            <strong>Tree Structure:</strong> It evaluates all possible moves and
+            their outcomes, forming a tree of potential game states.
+          </li>
+          <li>
+            <strong>Evaluation:</strong> Each terminal state (win, lose, draw)
+            is assigned a score.
+          </li>
+          <li>
+            <strong>Backtracking:</strong> The algorithm backtracks to determine
+            the best move based on maximizing the score for the current player
+            and minimizing it for the opponent.
+          </li>
+        </ul>
+        <p>
+          This strategy ensures that the AI can play optimally against a human
+          opponent or another AI.
+        </p>
+      </section>
+
+      <section>
+        <h2>References</h2>
+        <ul>
+          <li>
+            <a title="https://www.neverstopbuilding.com/blog/minimax" href="https://www.neverstopbuilding.com/blog/minimax" target="_blank">https://www.neverstopbuilding.com/blog/minimax</a>
+          </li>
+          <li>
+            <a title="https://github.com/Cledersonbc/tic-tac-toe-minimax" href="https://github.com/Cledersonbc/tic-tac-toe-minimax" target="_blank">https://github.com/Cledersonbc/tic-tac-toe-minimax</a>
+          </li>
+          <li>
+            <a title="https://en.wikipedia.org/wiki/Minimax" href="https://en.wikipedia.org/wiki/Minimax" target="_blank">https://en.wikipedia.org/wiki/Minimax</a>
+          </li>
+        </ul>
+      </section>
+    </article>
     <footer>
       <div>
-
-      </div>
-      <div>
-        <span>Developed BY <span>Sayyed Sohel</span></span>
+        <span>Developed BY <span>Sayyed Sohel</span> using AI</span>
       </div>
     </footer>
   </body>
